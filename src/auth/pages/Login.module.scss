@@ -1,0 +1,82 @@
+$border-width: var(--border-width);
+$border-radius: var(--border-radius);
+$color-border: var(--color-border);
+$color-primary: var(--color-primary);
+$color-primary-very-light: var(--color-primary-very-light);
+$color-black: var(--color-black);
+$color-warning: var(--color-warning);
+$color-white: var(--color-white);
+$font-family-primary: var(--font-family-primary);
+$shadow-v: var(--shadow-v);
+$shadow-h: var(--shadow-h);
+$shadow-blur: var(--shadow-blur);
+$shadow-spread: var(--shadow-spread);
+$color-shadow: var(--color-shadow);
+$transition-time: var(--transition-time);
+
+.user-form {
+    width: fit-content;
+    max-width: 300px;
+    border: $border-width solid $color-border;
+    border-radius: $border-radius;
+    padding: 50px 30px;
+    background-color: $color-primary-very-light;
+    box-shadow: $shadow-v $shadow-h $shadow-blur $shadow-spread $color-shadow;
+    margin-top: 30px;
+
+    &_label {
+        display: block;
+        font-family: $font-family-primary;
+        font-size: 14px;
+        font-weight: bold;
+        color: $color-black;
+        margin-bottom: 16px;
+    }
+
+    &_input {
+        font-family: $font-family-primary;
+        border: $border-width solid $color-primary;
+        border-radius: $border-radius;
+        box-shadow: $shadow-v $shadow-h $shadow-blur $shadow-spread $color-shadow;
+        padding: 8px;
+        margin-bottom: 16px;
+
+        &:focus {
+            border: $border-width solid $color-warning;
+            outline: none;
+        }
+    }
+
+    &_group {
+        margin-bottom: 18px;
+    }
+
+    &_btn {
+        font-family: $font-family-primary;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        background-color: $color-primary;
+        color: $color-white;
+        border: $border-width solid $color-white;
+        border-radius: $border-radius;
+        cursor: pointer;
+        padding: 12px 28px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        box-shadow: $shadow-v $shadow-h $shadow-blur $shadow-spread $color-shadow;
+        transition: background-color $transition-time ease, color $transition-time ease;
+
+        &:hover {
+            background-color: $color-white;
+            color: $color-black;
+        }
+
+        &:disabled {
+            background-color: $color-primary;
+            color: $color-white;
+            opacity: .7;
+            cursor: not-allowed;
+        }
+    }
+}

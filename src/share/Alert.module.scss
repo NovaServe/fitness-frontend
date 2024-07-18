@@ -1,0 +1,17 @@
+$font-family-primary: var(--font-family-primary);
+$color-warning: var(--color-warning);
+$color-success: var(--color-success);
+
+.alert {
+    font-family: $font-family-primary;
+    text-align: center;
+    margin-bottom: 18px;
+
+    &--warning {
+        color: $color-warning;
+    }
+
+    &--success {
+        color: $color-success;
+    }
+}
