@@ -7,9 +7,9 @@ import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</>
+  <>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </>
 );
