@@ -3,11 +3,11 @@ import { SUCCESS } from './alertMessage';
 import styles from './Alert.module.scss';
 
 function Alert({ message, messageType }) {
-    return (
-        <div className={`${styles.alert} ${messageType === SUCCESS ? styles['alert--success'] : styles['alert--warning']}`}>
-            {message}
-        </div>
-    );
+  return (
+    <div className={`${styles.alert} ${messageType === SUCCESS ? styles['alert--success'] : styles['alert--warning']}`}>
+      {message}
+    </div>
+  );
 }
 
 export default Alert;
