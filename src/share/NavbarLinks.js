@@ -7,7 +7,7 @@ function NavbarLinks({ role, outputType, autoCloseFunction }) {
     {role === 'ROLE_SUPERADMIN' && outputType === 'visible' && (<>
       <Link className={styles['navbar_menu-item']} to={'/admin/training'}>Training</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/spa'}>SPA</Link>
-      <Link className={styles['navbar_menu-item']} to={'/admin/profiles'}>Profiles</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/users'}>Profiles</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/analytics'}>Analytics</Link>
     </>)}
 

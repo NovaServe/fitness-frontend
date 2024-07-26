@@ -14,9 +14,11 @@ import ValidationMessage from '../../share/Alert.js';
 import styles from './Login.module.scss';
 
 function Login({ globalMessage }) {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   useEffect(() => {
     const requestAPI = async() => {
@@ -43,22 +45,13 @@ function Login({ globalMessage }) {
     requestAPI();
   }, []);
 
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
-
-  const onClear = () => {
-    reset();
-    setMessage('');
-    setMessageType('');
-  };
-
   const onSubmit = async(formData) => {
     try {
       const response = await login(formData);
       if (response.status === 200) {
         setUserDateToLocalStorage(response.body);
         dispatch({ type: 'LOGGED_IN' });
-        dispatch({ 
+        dispatch({
           type: 'SET_USER_DATA',
           payload: { fullName: response.body.fullName, role: response.body.role }
         });
@@ -80,6 +73,12 @@ function Login({ globalMessage }) {
     }
   };
 
+  const onClear = () => {
+    reset();
+    setMessage('');
+    setMessageType('');
+  };
+
   return (
     <div>
       <HelmetProvider>
@@ -98,7 +97,7 @@ function Login({ globalMessage }) {
       <form onSubmit={handleSubmit(onSubmit)} className={styles['user-form']}>
         <div className={styles['user-form_group']}>
           <label className={styles['user-form_label']} htmlFor='usernameOrEmailOrPhone'>
-						Username, email, or phone
+            Username, email, or phone
           </label>
           <input
             type='text'
@@ -124,7 +123,7 @@ function Login({ globalMessage }) {
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]/,
                 message:
-									'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)',
+                  'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*)',
               }
             })}
           />

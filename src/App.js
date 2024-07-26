@@ -5,6 +5,8 @@ import Home from './home/Home';
 import Login from './auth/pages/Login';
 import Logout from './auth/pages/Logout';
 import AdminTraining from './role-admin/training/pages/AdminTraining';
+import ListUsers from './users/pages/ListUsers';
+import CreateUser from './users/pages/CreateUser';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/admin/training' element={<AdminTraining />} />
+          <Route path='/admin/users' element={<ListUsers />} />
+          <Route path='/admin/users/add' element={<CreateUser />} />
         </Routes>
       </div >
     </Router>
