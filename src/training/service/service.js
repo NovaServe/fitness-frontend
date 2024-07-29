@@ -1,4 +1,4 @@
-export async function getTestMessage() {
+export async function getTestMessage () {
   const response = await fetch('/api/v1/test', {
     method: 'GET',
     headers: {

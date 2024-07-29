@@ -1,4 +1,4 @@
-function loginReducer(state = false, action) {
+function loginReducer (state = false, action) {
   switch (action.type) {
   case 'LOGGED_IN':
     return true;

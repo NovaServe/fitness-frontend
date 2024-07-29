@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteUserDataFromLocalStorage } from '../service/util';
-import { logout } from '../service/requests';
-import { LOGOUT_SUCCESSFUL, LOGOUT_FAILED } from '../service/messages';
-import { WARNING, SUCCESS } from '../../share/alertMessage';
+import { deleteUserDataFromLocalStorage } from '../services/util';
+import { logout } from '../services/requests';
+import { LOGOUT_SUCCESSFUL, LOGOUT_FAILED } from '../services/messages';
+import {SUCCESS, WARNING} from '../../share/components/alert/messages';
 
-function Logout() {
+function Logout () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const requestAPI = async() => {
+    const requestAPI = async () => {
       const response = await logout();
       if (response.status === 200) {
         deleteUserDataFromLocalStorage();

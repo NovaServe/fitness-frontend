@@ -3,7 +3,7 @@ let LOGIN = `${BASE_URL}/auth/login`;
 let LOGOUT = `${BASE_URL}/auth/logout`;
 let VALIDATE_TOKEN = `${BASE_URL}/auth/validate`;
 
-export async function login(requestDto) {
+export const login = async (requestDto) => {
   const response = await fetch(LOGIN, {
     method: 'POST',
     headers: {
@@ -16,18 +16,18 @@ export async function login(requestDto) {
     status: response.status,
     body: data
   };
-}
+};
 
-export async function logout() {
+export const logout = async () => {
   const response = await fetch(LOGOUT, {
     method: 'GET'
   });
   return {
     status: response.status
   };
-}
+};
 
-export async function validateToken() {
+export const validateToken = async () => {
   const response = await fetch(VALIDATE_TOKEN, {
     method: 'GET',
     headers: {
@@ -39,4 +39,4 @@ export async function validateToken() {
     status: response.status,
     body: data
   };
-}
+};

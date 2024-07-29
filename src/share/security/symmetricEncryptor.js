@@ -1,4 +1,4 @@
-export async function encrypt(plaintext, keyBase64) {
+export async function encrypt (plaintext, keyBase64) {
   let keyBuffer = Buffer.from(keyBase64, 'base64');
   let key = await window.crypto.subtle.importKey(
     'raw',
@@ -22,7 +22,7 @@ export async function encrypt(plaintext, keyBase64) {
   return Buffer.from(combined).toString('base64');
 }
 
-export async function decrypt(ciphertextBase64, keyBase64) {
+export async function decrypt (ciphertextBase64, keyBase64) {
   let combined = Buffer.from(ciphertextBase64, 'base64');
   let iv = combined.slice(0, 16);
   let encrypted = combined.slice(16);

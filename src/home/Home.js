@@ -1,42 +1,31 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { NO_ACTIVE_SESSION } from '../auth/service/messages.js';
-import { WARNING } from '../share/alertMessage';
-import { validateToken } from '../auth/service/requests.js';
-import { deleteUserDataFromLocalStorage, setUserDateToLocalStorage, getRoleFromLocalStorage } from '../auth/service/util';
+import {handleTokenValidationHomeOrLogin} from '../auth/services/tokenValidation';
+import Alert from '../share/components/alert/Alert';
 
-function Home() {
+const Home = ({ globalMessage }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const requestAPI = async() => {
-      const response = await validateToken();
-      if (response.status === 200) {
-        setUserDateToLocalStorage(response.body);
-        dispatch({ type: 'LOGGED_IN' });
-        dispatch({ type: 'CLEAR_GLOBAL_MESSAGE' });
-        if (getRoleFromLocalStorage() === 'ROLE_SUPERADMIN' || getRoleFromLocalStorage() === 'ROLE_ADMIN') {
-          navigate('/admin/training');
-        } else if (getRoleFromLocalStorage() === 'ROLE_CUSTOMER') {
-          navigate('/customer/training');
-        } else if (getRoleFromLocalStorage() === 'ROLE_INSTRUCTOR') {
-          navigate('/instructor/training');
-        }
-      } else {
-        deleteUserDataFromLocalStorage();
-        dispatch({
-          type: 'SET_GLOBAL_MESSAGE',
-          payload: { message: NO_ACTIVE_SESSION, messageType: WARNING }
-        });
-        navigate('/login');
-      }
+    const $fetch = async () => {
+      await handleTokenValidationHomeOrLogin(dispatch, navigate);
     };
-    requestAPI();
+    $fetch();
   }, []);
 
-  return (<></>);
-}
+  return (<>
+    {globalMessage && globalMessage.body ?
+      <Alert message={globalMessage.body.message} messageType={globalMessage.body.messageType} /> : <></>}
+  </>);
+};
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    globalMessage: state.globalMessage
+  };
+};
+
+export default connect(mapStateToProps)(Home);

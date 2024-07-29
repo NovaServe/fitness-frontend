@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import NavbarLinks from './NavbarLinks.js';
 import styles from './Navbar.module.scss';
 
-function Navbar({ isLoggedIn, userData }) {
+function Navbar ({ isLoggedIn, userData }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDropdownMenu, setIsOpenDropdownMenu] = useState(false);
   const [isOpenUserMenu, setIsOpenUserMenu] = useState(false);
@@ -44,21 +44,20 @@ function Navbar({ isLoggedIn, userData }) {
               <NavbarLinks role={userData.body.role} outputType='visible' />
             </div>
             {/* dropdown menu, hidden when 'More' unpressed */}
-            <div className={styles['navbar_menu_dropdown']}
-              onClick={toggleDropdownMenu}>More &#x25BE;
-              <div
-                className={`${isOpenDropdownMenu ? styles['navbar_menu_dropdown-items--hidden-open']
-                  : styles['navbar_menu_dropdown-items--hidden']}`} >
-                <NavbarLinks role={userData.body.role} outputType='more' />
+            {userData.body.role !== 'ROLE_SUPERADMIN' && (
+              <div className={styles['navbar_menu_dropdown']} onClick={toggleDropdownMenu}>More &#x25BE;
+                <div className={`${isOpenDropdownMenu ? styles['navbar_menu_dropdown-items--hidden-open'] : styles['navbar_menu_dropdown-items--hidden']}`}>
+                  <NavbarLinks role={userData.body.role} outputType="more"/>
+                </div>
               </div>
-            </div>
+            )}
           </>
-
           {/* right menu */}
           <div
             className={`${styles['navbar_right-menu_dropdown']} ${styles['navbar_right-menu_dropdown--large-screen']}`}
             onClick={toggleUserMenu}>
-            {userData && userData.body ? <div>{userData.body.fullName} &#x25BE;</div> : <div>User profile &#x25BE;</div>}
+            {userData && userData.body ? <div>{userData.body.fullName} &#x25BE;</div> :
+              <div>User profile &#x25BE;</div>}
             <div
               className={`${isOpenUserMenu ? styles['navbar_right-menu_dropdown-items--hidden-open']
                 : styles['navbar_right-menu_dropdown-items--hidden']}`} >

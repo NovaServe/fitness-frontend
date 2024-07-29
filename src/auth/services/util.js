@@ -1,18 +1,18 @@
-export function setUserDateToLocalStorage(data) {
+export const setUserDataToLocalStorage = (data) => {
   deleteUserDataFromLocalStorage();
   localStorage.setItem('fullName', data.fullName);
   localStorage.setItem('role', data.role);
-}
+};
 
-export function deleteUserDataFromLocalStorage() {
+export const deleteUserDataFromLocalStorage = () => {
   localStorage.removeItem('fullName');
   localStorage.removeItem('role');
-}
+};
 
-export function getFullNameFromLocalStorage() {
+export const getFullNameFromLocalStorage = () => {
   return localStorage.getItem('fullName');
-}
+};
 
-export function getRoleFromLocalStorage() {
+export const getRoleFromLocalStorage = () => {
   return localStorage.getItem('role');
-}
+};

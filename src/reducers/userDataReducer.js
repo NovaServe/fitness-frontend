@@ -1,6 +1,6 @@
-import { getFullNameFromLocalStorage, getRoleFromLocalStorage } from '../auth/service/util';
+import { getFullNameFromLocalStorage, getRoleFromLocalStorage } from '../auth/services/util';
 
-function initialState() {
+function initialState () {
   return {
     'body': {
       'fullName': getFullNameFromLocalStorage(),
@@ -9,7 +9,7 @@ function initialState() {
   };
 }
 
-function userDataReducer(state = initialState(), action) {
+function userDataReducer (state = initialState(), action) {
   switch (action.type) {
   case 'SET_USER_DATA':
     return {

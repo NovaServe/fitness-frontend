@@ -3,7 +3,7 @@ const initialState = {
   previousUrl: '/',
 };
 
-function urlHistoryReducer(state = initialState, action) {
+function urlHistoryReducer (state = initialState, action) {
   switch (action.type) {
   case 'SET_CURRENT_URL':
     return {
