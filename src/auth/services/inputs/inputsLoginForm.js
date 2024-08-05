@@ -1,4 +1,4 @@
-export const inputs = [
+export const getInputsLoginForm = [
   {
     label: 'Username, email, or phone number',
     type: 'text',

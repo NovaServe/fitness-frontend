@@ -1,0 +1,12 @@
+.heading {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-heading);
+  color: var(--color-blur);
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+
+  &--centered {
+    text-align: center;
+  }
+}

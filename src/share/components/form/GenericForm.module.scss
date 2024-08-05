@@ -39,7 +39,8 @@ $transition-time: var(--transition-time);
     border-radius: $border-radius;
     box-shadow: $shadow-v $shadow-h $shadow-blur $shadow-spread $color-shadow;
     padding: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    margin-right: 12px;
 
     &:focus {
       border: $border-width solid $color-warning;

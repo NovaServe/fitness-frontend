@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/requests.js';
-import { handleLoginForm } from '../services/loginSubmission.js';
+import { login } from '../services/authRequests.js';
+import { handleLoginForm } from '../services/authHandlers.js';
 import {handleTokenValidationHomeOrLogin} from '../services/tokenValidation';
-import { inputs } from '../services/loginInputs.js';
-import TabTitle from '../../share/components/TabTitle.js';
+import { getInputsLoginForm } from '../services/inputs/inputsLoginForm.js';
+import TabTitle from '../../share/components/misc/TabTitle.js';
 import Alert from '../../share/components/alert/Alert';
 import GenericForm from '../../share/components/form/GenericForm';
+import Heading from '../../share/components/headings/Heading';
+import {clearGlobalMessage} from '../../share/services/globalHandlers';
+import helpers from '../../share/styles/Helpers.module.scss';
 
 const Login = ({ globalMessage }) => {
   const [message, setMessage] = useState('');
@@ -17,10 +20,10 @@ const Login = ({ globalMessage }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const $fetch = async () => {
+    const fetchApi = async () => {
       await handleTokenValidationHomeOrLogin(dispatch, navigate);
     };
-    $fetch();
+    fetchApi();
   }, []);
 
   const onSubmit = async (formData) => {
@@ -30,20 +33,19 @@ const Login = ({ globalMessage }) => {
   const onClear = () => {
     setMessage('');
     setMessageType('');
-    dispatch({
-      type: 'CLEAR_GLOBAL_MESSAGE',
-      payload: { message: '', messageType: '' }
-    });
+    clearGlobalMessage(dispatch);
   };
 
   return (
     <div>
       <TabTitle title='Login' />
-      <h3 className='shared_heading'>Login</h3>
+      <Heading text='Login' isCentered={true} />
       {globalMessage && globalMessage.body ?
         <Alert message={globalMessage.body.message} messageType={globalMessage.body.messageType} /> : <></>}
       <Alert message={message} messageType={messageType} />
-      <GenericForm inputs={inputs} onSubmit={onSubmit} onClear={onClear} />
+      <div className={helpers['center-container']}>
+        <GenericForm inputs={getInputsLoginForm} onSubmit={onSubmit} onClear={onClear} />
+      </div>
     </div>
   );
 };
