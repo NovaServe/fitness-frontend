@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import Alert from '../../share/components/alert/Alert';
 import Heading from '../../share/components/headings/Heading';
-import TabTitle from '../../share/components/TabTitle';
+import TabTitle from '../../share/components/misc/TabTitle';
 
 const Training = ({ globalMessage }) => {
   // const navigate = useNavigate();

@@ -10,10 +10,10 @@ const Home = ({ globalMessage }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const $fetch = async () => {
+    const fetchApi = async () => {
       await handleTokenValidationHomeOrLogin(dispatch, navigate);
     };
-    $fetch();
+    fetchApi();
   }, []);
 
   return (<>

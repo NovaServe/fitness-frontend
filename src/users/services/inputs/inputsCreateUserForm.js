@@ -1,6 +1,6 @@
-import {getRoleFromLocalStorage} from '../../auth/services/util';
+import {getRoleFromLocalStorage} from '../../../auth/services/util';
 
-export const getInputs = () => {
+export const getInputsCreateUserForm = () => {
   const role = getRoleFromLocalStorage();
   const baseOpts = [{ value: '', label: 'Select a role' }];
   let opts;

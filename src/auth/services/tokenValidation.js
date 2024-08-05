@@ -1,8 +1,8 @@
-import { validateToken } from './requests';
+import { validateToken } from './authRequests';
 import {deleteUserDataFromLocalStorage, getRoleFromLocalStorage, setUserDataToLocalStorage} from './util';
-import {SESSION_EXPIRED} from './messages';
+import {SESSION_EXPIRED} from './authMessages';
 import {WARNING} from '../../share/components/alert/messages';
-import {ERROR_OCCURED_STATUS, SMTH_WENT_WRONG} from '../../share/services/messages';
+import {ERROR_OCCURED_STATUS, SMTH_WENT_WRONG} from '../../share/services/globalMessages';
 
 export const handleTokenValidation = async (dispatch, setMessage, navigate) => {
   try {

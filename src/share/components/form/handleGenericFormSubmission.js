@@ -1,7 +1,6 @@
-import { ERROR_OCCURED_STATUS, ERROR_OCCURED_MESSAGE } from '../../services/messages';
-import { SESSION_EXPIRED } from '../../../auth/services/messages';
+import { ERROR_OCCURED_STATUS, ERROR_OCCURED_MESSAGE } from '../../services/globalMessages';
 import {SUCCESS, WARNING} from '../alert/messages';
-import { deleteUserDataFromLocalStorage } from '../../../auth/services/util';
+import {on401} from '../../services/globalHandlers';
 
 export const handleGenericFormSubmission = async (
   formData,
@@ -16,20 +15,18 @@ export const handleGenericFormSubmission = async (
     if (response.status === 201) {
       setMessageType(SUCCESS);
       setMessage(successMessage);
+      return true;
     } else if (response.status === 401) {
-      deleteUserDataFromLocalStorage();
-      dispatch({ type: 'LOGGED_OUT' });
-      dispatch({
-        type: 'SET_GLOBAL_MESSAGE',
-        payload: { message: SESSION_EXPIRED, messageType: WARNING }
-      });
-      navigate('/login');
+      on401(dispatch, navigate);
+      return false;
     } else {
       setMessageType(WARNING);
       setMessage(ERROR_OCCURED_STATUS + response.status);
+      return false;
     }
   } catch (error) {
     setMessageType(WARNING);
     setMessage(ERROR_OCCURED_MESSAGE + error.message);
+    return false;
   }
 };

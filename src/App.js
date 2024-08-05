@@ -20,8 +20,8 @@ function App () {
           <Route path='/admin/training' element={<Training />} />
           <Route path='/customer/training' element={<Training />} />
           <Route path='/customer/training' element={<Training />} />
-          <Route path='/admin/users' element={<ListUsers />} />
-          <Route path='/admin/users/add' element={<CreateUser />} />
+          <Route path='/admin/profiles' element={<ListUsers />} />
+          <Route path='/admin/profiles/add' element={<CreateUser />} />
         </Routes>
       </div >
     </Router>
