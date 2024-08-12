@@ -1,25 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Alert from '../../share/components/alert/Alert';
-import Button from '../../share/components/button/Button';
-import {useNavigate} from 'react-router-dom';
 import Heading from '../../share/components/headings/Heading';
-import { getUsers} from '../services/userRequests';
-import UserCard from '../components/UserCard';
-import {handleGenericFilterSubmission} from '../../share/components/filter/handleGenericFilterSubmission';
-import helpers from '../../share/styles/Helpers.module.scss';
-import Pagination from '../../share/components/pagination/Pagination';
+import TabTitle from '../../share/components/misc/TabTitle';
 import {useForm} from 'react-hook-form';
+import {handleGenericFilterSubmission} from '../../share/components/filter/handleGenericFilterSubmission';
+import Button from '../../share/components/button/Button';
 import styles from '../../share/components/filter/GenericFilter.module.scss';
 import GenericSelectInput from '../../share/components/form/GenericSelectInput';
 import GenericTextInput from '../../share/components/form/GenericTextInput';
-import {getInputsListUsersFilter} from '../services/inputs/inputsListUsersFilter';
+import helpers from '../../share/styles/Helpers.module.scss';
 import Found from '../../share/components/found/Found';
-import {getRolesForUrlParams} from '../services/userUtils';
-import TabTitle from '../../share/components/misc/TabTitle';
+import Pagination from '../../share/components/pagination/Pagination';
+import {getAreas, getInstructors, getTrainingList} from '../services/trainingRequests';
+import {getInputsListTrainingFilter} from '../services/inputs/inputsListTrainingFilter';
+import TrainingCards from '../components/TrainingCards';
+import {handleGetEntitiesFlat} from '../../share/services/globalHandlers';
 
-const ListUsers = ({ globalMessage }) => {
-  const [users, setUsers] = useState([]);
+const ListTraining = ({ globalMessage }) => {
+  const [training, setTraining] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [areas, setAreas] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [instructors, setInstructors] = useState([]);
   const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [pageNumberZeroBased, setPageNumberZeroBased] = useState(0);
@@ -34,23 +39,28 @@ const ListUsers = ({ globalMessage }) => {
     const fetchApi = async () => {
       await handleGenericFilterSubmission(
         {
-          roles: getRolesForUrlParams(),
-          fullName: null,
+          areas: null,
+          instructors: null,
+          levels: null,
+          intensity: null,
+          type: null,
           pageSize: null,
           sortBy: null,
           order: null
         },
         0,
-        getUsers,
-        setUsers,
+        getTrainingList,
+        setTraining,
         setTotalPages,
         setTotalElements,
         setPageNumberZeroBased,
         dispatch,
         navigate,
         setMessage,
-        setMessageType,
-      );
+        setMessageType);
+
+      await handleGetEntitiesFlat(getAreas, setAreas, setMessage, setMessageType, dispatch, navigate);
+      await handleGetEntitiesFlat(getInstructors, setInstructors, setMessage, setMessageType, dispatch, navigate);
     };
     fetchApi();
   }, []);
@@ -63,39 +73,40 @@ const ListUsers = ({ globalMessage }) => {
     await handleGenericFilterSubmission(
       formData,
       pageNumberZeroBased,
-      getUsers,
-      setUsers,
+      getTrainingList,
+      setTraining,
       setTotalPages,
       setTotalElements,
       setPageNumberZeroBased,
       dispatch,
       navigate,
       setMessage,
-      setMessageType,
-    );
+      setMessageType);
   };
 
   const onReset = async (e) => {
     e.preventDefault();
     await handleGenericFilterSubmission(
       {
-        roles: getRolesForUrlParams(),
-        fullName: null,
+        areas: null,
+        instructors: null,
+        levels: null,
+        intensity: null,
+        type: null,
         pageSize: null,
         sortBy: null,
         order: null
       },
       0,
-      getUsers,
-      setUsers,
+      getTrainingList,
+      setTraining,
       setTotalPages,
       setTotalElements,
       setPageNumberZeroBased,
       dispatch,
       navigate,
       setMessage,
-      setMessageType,
-    );
+      setMessageType);
   };
 
   const onClear = () => {
@@ -110,32 +121,34 @@ const ListUsers = ({ globalMessage }) => {
   const onPageChange = async (newPageNumberZeroBased) => {
     await handleGenericFilterSubmission(
       {
-        roles: getValues('roles'),
-        fullName: getValues('fullName'),
-        pageSize: getValues('pageSize'),
-        sortBy: getValues('sortBy'),
-        order: getValues('order')
+        areas: null,
+        instructors: null,
+        levels: null,
+        intensity: null,
+        type: null,
+        pageSize: null,
+        sortBy: null,
+        order: null
       },
       newPageNumberZeroBased,
-      getUsers,
-      setUsers,
+      getTrainingList,
+      setTraining,
       setTotalPages,
       setTotalElements,
       setPageNumberZeroBased,
       dispatch,
       navigate,
       setMessage,
-      setMessageType,
-    );
+      setMessageType);
   };
 
   return (<>
-    <TabTitle title='Profiles'/>
+    <TabTitle title='Training'/>
     {globalMessage && globalMessage.body ?
       <Alert message={globalMessage.body.message} messageType={globalMessage.body.messageType} /> : <></>}
     <Alert message={message} messageType={messageType} />
-    <Heading text="Profiles" />
-    <Button title="Add profile" link="/admin/profiles/add" />
+    <Heading text="Training" />
+    <Button title="Add training" link="/admin/training/add" />
 
     {/* Filter */}
     <>
@@ -143,7 +156,7 @@ const ListUsers = ({ globalMessage }) => {
       {isFilterVisible && (
         <form className={styles.form} onSubmit={handleSubmit(onFilterSubmit)}>
           <div className={styles['form_upper']}>
-            {getInputsListUsersFilter().map((inputProps, index) => {
+            {getInputsListTrainingFilter(areas, instructors).map((inputProps, index) => {
               const {label, type, name, placeholder, options, isMultiple, rules} = inputProps;
               const Component = type === 'select' ? GenericSelectInput : GenericTextInput;
 
@@ -173,23 +186,13 @@ const ListUsers = ({ globalMessage }) => {
       )}
     </>
 
-    {/* Users */}
-    {users && users.length > 0 && (<>
+    {/* Training */}
+    {training && training.length > 0 && (<>
       <Found totalElements={totalElements}/>
       <div className={helpers['cards-container']}>
-        {users.map((user) =>
-          (<UserCard
-            key={user.id}
-            id={user.id}
-            role={user.role}
-            username={user.username}
-            fullName={user.fullName}
-            email={user.email}
-            gender={user.gender}
-            ageGroup={user.ageGroup}/>))}
+        <TrainingCards cards={training} />
       </div>
-    </>
-    )}
+    </>)}
 
     <Pagination pageNumberZeroBased={pageNumberZeroBased} totalPages={totalPages} onPageChange={onPageChange}/>
   </>);
@@ -201,4 +204,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ListUsers);
+export default connect(mapStateToProps)(ListTraining);

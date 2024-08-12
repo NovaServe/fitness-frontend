@@ -7,9 +7,11 @@ const GenericSelectInput = ({ label, name, options, isMultiple, register, rules,
     <label className={styles.form_label} htmlFor={name}>{label}</label>
     <select id={name} {...register(name, rules)} className={styles.form_input} multiple={isMultiple}>
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
+        <option
+          key={option.value} value={option.value}
+          disabled={option.value === ''}
+          selected={option.value === '' && !isMultiple}
+        >{option.label}</option>
       ))}
     </select>
     {error && <ValidationMessage message={error.message} />}

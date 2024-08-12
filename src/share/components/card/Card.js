@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../button/Button';
 import styles from './Card.module.scss';
 
-const User = ({ fields, button }) => {
+const Card = ({ fields, button }) => {
   return (
     <div className={styles['card']}>
       {fields.map((field, index) => (
@@ -16,4 +16,4 @@ const User = ({ fields, button }) => {
   );
 };
 
-export default User;
+export default Card;

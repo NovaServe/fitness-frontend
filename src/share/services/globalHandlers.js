@@ -1,6 +1,7 @@
 import {deleteUserDataFromLocalStorage, setUserDataToLocalStorage} from '../../auth/services/util';
 import {SESSION_EXPIRED} from '../../auth/services/authMessages';
 import {SUCCESS, WARNING} from '../components/alert/messages';
+import {ERROR_OCCURED_MESSAGE, ERROR_OCCURED_STATUS} from './globalMessages';
 
 export const globalError = (dispatch, message) => {
   dispatch({
@@ -43,4 +44,21 @@ export const setUserData = (dispatch, userData) => {
     type: 'SET_USER_DATA',
     payload: { fullName: userData.fullName, role: userData.role }
   });
+};
+
+export const handleGetEntitiesFlat = async (func, setEntities, setMessage, setMessageType, dispatch, navigate) => {
+  try {
+    const res = await func();
+    if (res.status === 200) {
+      setEntities(res.body);
+    } else if (res.status === 401) {
+      on401(dispatch, navigate);
+    } else {
+      setMessageType(WARNING);
+      setMessage(ERROR_OCCURED_STATUS + res.status);
+    }
+  } catch (e) {
+    setMessageType(WARNING);
+    setMessage(ERROR_OCCURED_MESSAGE + e.message);
+  }
 };

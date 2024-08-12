@@ -45,7 +45,7 @@ const CreateUser = ({ globalMessage }) => {
   };
 
   return (<>
-    <TabTitle title='Add user'/>
+    <TabTitle title='Add profile'/>
     <Back link="/admin/profiles"/>
 
     <div className={helpers['center-container']}>
