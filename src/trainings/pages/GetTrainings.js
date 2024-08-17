@@ -17,7 +17,7 @@ import {handleGetEntitiesFlat} from '../../share/services/globalHandlers';
 import CalendarDay from '../components/CalendarDay';
 import {handleGetTrainings} from '../services/trainingHandlers';
 
-const ListTrainings = ({ globalMessage }) => {
+const GetTrainings = ({ globalMessage }) => {
   const [startRange, setStartRange] = useState(null);
   const [endRange, setEndRange] = useState(null);
   const [content, setContent] = useState([]);
@@ -164,4 +164,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ListTrainings);
+export default connect(mapStateToProps)(GetTrainings);

@@ -18,7 +18,7 @@ import Found from '../../share/components/found/Found';
 import {getRolesForUrlParams} from '../services/userUtils';
 import TabTitle from '../../share/components/misc/TabTitle';
 
-const ListUsers = ({ globalMessage }) => {
+const GetUsers = ({ globalMessage }) => {
   const [users, setUsers] = useState([]);
   const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -201,4 +201,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ListUsers);
+export default connect(mapStateToProps)(GetUsers);

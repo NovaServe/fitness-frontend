@@ -45,10 +45,10 @@ export const handleTokenValidationHomeOrLogin = async (dispatch, navigate) => {
       dispatch({ type: 'CLEAR_GLOBAL_MESSAGE' });
       const userRole = getRoleFromLocalStorage();
       const nav = {
-        ROLE_SUPERADMIN: '/admin/training',
-        ROLE_ADMIN: '/admin/training',
-        ROLE_CUSTOMER: '/customer/training',
-        ROLE_INSTRUCTOR: '/instructor/training'
+        ROLE_SUPERADMIN: '/admin/trainings',
+        ROLE_ADMIN: '/admin/trainings',
+        ROLE_CUSTOMER: '/customer/trainings',
+        ROLE_INSTRUCTOR: '/instructor/trainings'
       };
       navigate(nav[userRole]);
     } else if (res.status === 401) {

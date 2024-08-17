@@ -13,7 +13,7 @@ function NavbarLinks ({ role, outputType, autoCloseFunction }) {
     </>)}
 
     {role === 'ROLE_ADMIN' && outputType === 'visible' && (<>
-      <Link className={styles['navbar_menu-item']} to={'/admin/training'}>Training</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/trainings'}>Training</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/profiles'}>Profiles</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/analytics'}>Analytics</Link>
     </>)}
@@ -25,7 +25,7 @@ function NavbarLinks ({ role, outputType, autoCloseFunction }) {
     </>)}
 
     {role === 'ROLE_ADMIN' && outputType === 'all' && (<>
-      <Link className={styles['navbar_menu-item']} to={'/admin/training'} onClick={autoCloseFunction}>Training</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/trainings'} onClick={autoCloseFunction}>Training</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/profiles'} onClick={autoCloseFunction}>Profiles</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/analytics'} onClick={autoCloseFunction}>Analytics</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/payments'} onClick={autoCloseFunction}>Payments</Link>

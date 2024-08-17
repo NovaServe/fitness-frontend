@@ -1,4 +1,4 @@
-export const getInputsListTrainingFilter = (areas, instructors) => {
+export const getInputsTrainingsFilter = (areas, instructors) => {
   return [
     {
       type: 'select',
@@ -49,7 +49,7 @@ export const getInputsListTrainingFilter = (areas, instructors) => {
       name: 'type',
       options: [
         { value: '', label: 'Type' },
-        {value: 'In-person', label: 'In-person'},
+        {value: 'In_person', label: 'In-person'},
         {value: 'Virtual', label: 'Virtual'}],
       isMultiple: true,
       rules: {
@@ -58,40 +58,15 @@ export const getInputsListTrainingFilter = (areas, instructors) => {
     },
     {
       type: 'select',
-      name: 'pageSize',
+      name: 'kind',
       options: [
-        { value: '', label: 'Page size' },
-        {value: '5', label: '5'},
-        {value: '10', label: '10'},
-        {value: '15', label: '15'}],
-      isMultiple: false,
+        { value: '', label: 'Kind' },
+        {value: 'Group', label: 'Group'},
+        {value: 'Individual', label: 'Individual'}],
+      isMultiple: true,
       rules: {
         required: false
       }
-    },
-    {
-      type: 'select',
-      name: 'sortBy',
-      options: [
-        { value: '', label: 'Sort by' },
-        {value: 'id', label:'id'},
-        {value: 'fullName', label: 'fullName'} ],
-      isMultiple: false,
-      rules: {
-        required: false
-      }
-    },
-    {
-      type: 'select',
-      name: 'order',
-      options: [
-        { value: '', label: 'Order' },
-        {value: 'ASC', label:'Ascending'},
-        {value: 'DESC', label: 'Descending'}],
-      isMultiple: false,
-      rules: {
-        required: false
-      }
-    },
+    }
   ];
 };

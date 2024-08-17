@@ -2,67 +2,50 @@ import React from 'react';
 import styles from '../../share/components/card/Card.module.scss';
 import Button from '../../share/components/button/Button';
 
-const TrainingCard = ({card}) => {
-  const {
-    id,
-    title,
-    description,
-    instructor,
-    areas,
-    intensity,
-    level,
-    type,
-    trainingPlace,
-    totalPlaces,
-    freePlaces,
-    createdAt,
-    createdBy
-  } = card;
-
+const TrainingCard = ({training}) => {
   return (
-
-    <div key={id} className={styles['card']}>
+    <div key={training.id} className={styles['card']}>
       <div className={styles['card__item']}>
-        <strong>Title:</strong> {title}
+        <strong>Title:</strong> {training.title}
       </div>
       <div className={styles['card__item']}>
-        <strong>Description:</strong> {description}
+        <strong>Description:</strong> {training.description}
       </div>
       <div className={styles['card__item']}>
-        <strong>Instructor:</strong> {instructor.fullName}
+        <strong>Instructor:</strong> {training.instructor.fullName}
       </div>
-      {areas && areas.length > 0 && (
+      {training.areas && training.areas.length > 0 && (
         <div className={styles['card__item']}>
-          <strong>Areas:</strong> {areas.map(area => (
+          <strong>Areas:</strong> {training.areas.map(area => (
             <label key={area.name}>{area} </label>))}
         </div>)}
       <div className={styles['card__item']}>
-        <strong>Intensity:</strong> {intensity}
+        <strong>Intensity:</strong> {training.intensity}
       </div>
       <div className={styles['card__item']}>
-        <strong>Level:</strong> {level}
+        <strong>Level:</strong> {training.level}
       </div>
       <div className={styles['card__item']}>
-        <strong>Type:</strong> {type}
+        <strong>Type:</strong> {training.type}
       </div>
       <div className={styles['card__item']}>
-        <strong>Training place:</strong> {trainingPlace}
+        <strong>Location:</strong> {training.location}
       </div>
       <div className={styles['card__item']}>
-        <strong>Total places:</strong> {totalPlaces}
+        <strong>Total places:</strong> {training.totalPlaces}
       </div>
       <div className={styles['card__item']}>
-        <strong>Free places:</strong> {freePlaces}
+        <strong>Free places:</strong> {training.freePlaces}
       </div>
       <div className={styles['card__item']}>
-        <strong>Created at:</strong> {createdAt}
+        <strong>Created at:</strong> {training.createdAt}
       </div>
       <div className={styles['card__item']}>
-        <strong>Created by:</strong> {createdBy.role} {createdBy.fullName}
+        <strong>Created by:</strong> {training.createdBy.role} {training.createdBy.fullName}
       </div>
 
       <br/>
-      <Button title="Manage" link={`/admin/training/manage/${id}`}/>
+      <Button title="Manage" link={`/admin/training/manage/${training.id}`}/>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-export const getTrainingList = async () => {
+export const getTrainings = async () => {
   // const response = await fetch('/api/v1/test', {
   //   method: 'GET',
   //   headers: {
@@ -13,24 +13,24 @@ export const getTrainingList = async () => {
 
   return {
     status: 200,
-    body: mockTraining,
+    body: mockTrainings,
   };
 };
 
-const mockTraining = {
-  start_range: new Date(),
-  end_range: new Date(),
+const mockTrainings = {
+  startRange: '2024-01-14',
+  endRange: '2024-01-21',
   content: [
     {
-      date: new Date(),
+      date: '2024-01-14',
       dayOfWeek: 'Monday',
-      training: [
+      trainings: [
         {
           id: 1,
-          start: new Date(),
-          end: new Date(),
-          title: 'Morning Training',
-          description: 'Nice training',
+          start: '10:00',
+          end: '11:30',
+          title: 'Training Title',
+          description: 'Training description',
           instructor: {
             id: 1,
             fullName: 'Instructor Full Name'
@@ -43,7 +43,7 @@ const mockTraining = {
           location: 'Room 2',
           totalPlaces: 10,
           freePlaces: 8,
-          createdAt: new Date(),
+          createdAt: '2023-05-27',
           createdBy: {
             id: 2,
             fullName: 'Admin Full Name',
@@ -75,9 +75,9 @@ export const getAreas = async () => {
 };
 
 const mockAreas = [
-  { value: 1, label: 'Fitness'},
-  { value: 2, label: 'Pilates'},
-  { value: 3, label: 'Stretch'}
+  { value: 1, label: 'Area 1'},
+  { value: 2, label: 'Area 2'},
+  { value: 3, label: 'Area 3'}
 ];
 
 export const getInstructors = async () => {
@@ -100,7 +100,7 @@ export const getInstructors = async () => {
 };
 
 const mockInstructors = [
-  { value: 1, label: 'John'},
-  { value: 2, label: 'Kate'},
-  { value: 3, label: 'Jannet'}
+  { value: 1, label: 'Instructor 1'},
+  { value: 2, label: 'Instructor 2'},
+  { value: 3, label: 'Instructor 3'}
 ];
