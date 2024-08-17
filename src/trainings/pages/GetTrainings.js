@@ -6,54 +6,44 @@ import Alert from '../../share/components/alert/Alert';
 import Heading from '../../share/components/headings/Heading';
 import TabTitle from '../../share/components/misc/TabTitle';
 import {useForm} from 'react-hook-form';
-import {handleGenericFilterSubmission} from '../../share/components/filter/handleGenericFilterSubmission';
 import Button from '../../share/components/button/Button';
 import styles from '../../share/components/filter/GenericFilter.module.scss';
 import GenericSelectInput from '../../share/components/form/GenericSelectInput';
 import GenericTextInput from '../../share/components/form/GenericTextInput';
 import helpers from '../../share/styles/Helpers.module.scss';
-import Found from '../../share/components/found/Found';
-import Pagination from '../../share/components/pagination/Pagination';
-import {getAreas, getInstructors, getTrainingList} from '../services/trainingRequests';
-import {getInputsListTrainingFilter} from '../services/inputs/inputsListTrainingFilter';
-import TrainingCards from '../components/TrainingCards';
+import {getAreas, getInstructors, getTrainings} from '../services/trainingRequests';
+import {getInputsTrainingsFilter} from '../services/inputs/inputsTrainingsFilter';
 import {handleGetEntitiesFlat} from '../../share/services/globalHandlers';
+import CalendarDay from '../components/CalendarDay';
+import {handleGetTrainings} from '../services/trainingHandlers';
 
-const ListTraining = ({ globalMessage }) => {
-  const [training, setTraining] = useState([]);
-  // eslint-disable-next-line no-unused-vars
+const ListTrainings = ({ globalMessage }) => {
+  const [startRange, setStartRange] = useState(null);
+  const [endRange, setEndRange] = useState(null);
+  const [content, setContent] = useState([]);
   const [areas, setAreas] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [instructors, setInstructors] = useState([]);
-  const [totalElements, setTotalElements] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pageNumberZeroBased, setPageNumberZeroBased] = useState(0);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-  const { register, handleSubmit, formState: { errors }, getValues, setValue, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm();
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchApi = async () => {
-      await handleGenericFilterSubmission(
+      await handleGetTrainings(
         {
           areas: null,
           instructors: null,
           levels: null,
           intensity: null,
-          type: null,
-          pageSize: null,
-          sortBy: null,
-          order: null
+          type: null
         },
-        0,
-        getTrainingList,
-        setTraining,
-        setTotalPages,
-        setTotalElements,
-        setPageNumberZeroBased,
+        getTrainings,
+        setContent,
+        setStartRange,
+        setEndRange,
         dispatch,
         navigate,
         setMessage,
@@ -63,21 +53,22 @@ const ListTraining = ({ globalMessage }) => {
       await handleGetEntitiesFlat(getInstructors, setInstructors, setMessage, setMessageType, dispatch, navigate);
     };
     fetchApi();
+
+    console.log(content);
+    console.log(startRange);
+    console.log(endRange);
   }, []);
 
   const handleFilterVisibility = () => {
     setIsFilterVisible(!isFilterVisible);
   };
 
-  const onFilterSubmit = async (formData) => {
-    await handleGenericFilterSubmission(
-      formData,
-      pageNumberZeroBased,
-      getTrainingList,
-      setTraining,
-      setTotalPages,
-      setTotalElements,
-      setPageNumberZeroBased,
+  const onFilterSubmit = async (filterFormData) => {
+    await handleGetTrainings(
+      filterFormData,
+      setContent,
+      setStartRange,
+      setEndRange,
       dispatch,
       navigate,
       setMessage,
@@ -86,23 +77,17 @@ const ListTraining = ({ globalMessage }) => {
 
   const onReset = async (e) => {
     e.preventDefault();
-    await handleGenericFilterSubmission(
+    await handleGetTrainings(
       {
         areas: null,
         instructors: null,
         levels: null,
         intensity: null,
-        type: null,
-        pageSize: null,
-        sortBy: null,
-        order: null
+        type: null
       },
-      0,
-      getTrainingList,
-      setTraining,
-      setTotalPages,
-      setTotalElements,
-      setPageNumberZeroBased,
+      setContent,
+      setStartRange,
+      setEndRange,
       dispatch,
       navigate,
       setMessage,
@@ -111,35 +96,8 @@ const ListTraining = ({ globalMessage }) => {
 
   const onClear = () => {
     reset();
-    setValue('pageSize', '');
-    setValue('sortBy', '');
-    setValue('order', '');
     setMessage('');
     setMessageType('');
-  };
-
-  const onPageChange = async (newPageNumberZeroBased) => {
-    await handleGenericFilterSubmission(
-      {
-        areas: null,
-        instructors: null,
-        levels: null,
-        intensity: null,
-        type: null,
-        pageSize: null,
-        sortBy: null,
-        order: null
-      },
-      newPageNumberZeroBased,
-      getTrainingList,
-      setTraining,
-      setTotalPages,
-      setTotalElements,
-      setPageNumberZeroBased,
-      dispatch,
-      navigate,
-      setMessage,
-      setMessageType);
   };
 
   return (<>
@@ -156,7 +114,7 @@ const ListTraining = ({ globalMessage }) => {
       {isFilterVisible && (
         <form className={styles.form} onSubmit={handleSubmit(onFilterSubmit)}>
           <div className={styles['form_upper']}>
-            {getInputsListTrainingFilter(areas, instructors).map((inputProps, index) => {
+            {getInputsTrainingsFilter(areas, instructors).map((inputProps, index) => {
               const {label, type, name, placeholder, options, isMultiple, rules} = inputProps;
               const Component = type === 'select' ? GenericSelectInput : GenericTextInput;
 
@@ -187,14 +145,16 @@ const ListTraining = ({ globalMessage }) => {
     </>
 
     {/* Training */}
-    {training && training.length > 0 && (<>
-      <Found totalElements={totalElements}/>
-      <div className={helpers['cards-container']}>
-        <TrainingCards cards={training} />
-      </div>
+    {content && content.length > 0 && (<>
+      <div>Start range: {startRange}, end range: {endRange}</div>
+      {content.map((day, index) => (
+        <div key={index}>
+          <div>Date: {day.date}, Day: {day.dayOfWeek}</div>
+          <CalendarDay day={day} />
+        </div>
+      ))}
     </>)}
 
-    <Pagination pageNumberZeroBased={pageNumberZeroBased} totalPages={totalPages} onPageChange={onPageChange}/>
   </>);
 };
 
@@ -204,4 +164,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ListTraining);
+export default connect(mapStateToProps)(ListTrainings);
