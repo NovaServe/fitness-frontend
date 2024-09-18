@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import TextInput from './TextInput';
-import SelectInput from './SelectInput';
+import GenericTextInput from './GenericTextInput';
+import GenericSelectInput from './GenericSelectInput';
 import styles from './GenericForm.module.scss';
 import helpers from '../../styles/Helpers.module.scss';
 
@@ -15,11 +15,18 @@ const GenericForm = ({ inputs, onSubmit, onClear }) => {
     }
   };
 
+  const handleGenericFormSubmit = async (formData) => {
+    const isSuccess = await onSubmit(formData);
+    if (isSuccess) {
+      reset();
+    }
+  };
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(handleGenericFormSubmit)}>
       {inputs.map((inputProps, index) => {
         const { label, type, name, options, rules } = inputProps;
-        const Component = type === 'select' ? SelectInput : TextInput;
+        const Component = type === 'select' ? GenericSelectInput : GenericTextInput;
 
         return (
           <Component

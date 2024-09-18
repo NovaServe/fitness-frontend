@@ -5,16 +5,16 @@ import styles from './Navbar.module.scss';
 function NavbarLinks ({ role, outputType, autoCloseFunction }) {
   return (<>
     {role === 'ROLE_SUPERADMIN' && outputType === 'visible' && (<>
-      <Link className={styles['navbar_menu-item']} to={'/admin/users/add'}>Add Admin</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/profiles/add'}>Add Admin</Link>
     </>)}
 
     {role === 'ROLE_SUPERADMIN' && outputType === 'all' && (<>
-      <Link className={styles['navbar_menu-item']} to={'/admin/users/add'}>Add Admin</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/profiles/add'}>Add Admin</Link>
     </>)}
 
     {role === 'ROLE_ADMIN' && outputType === 'visible' && (<>
       <Link className={styles['navbar_menu-item']} to={'/admin/training'}>Training</Link>
-      <Link className={styles['navbar_menu-item']} to={'/admin/users'}>Profiles</Link>
+      <Link className={styles['navbar_menu-item']} to={'/admin/profiles'}>Profiles</Link>
       <Link className={styles['navbar_menu-item']} to={'/admin/analytics'}>Analytics</Link>
     </>)}
 

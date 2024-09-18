@@ -1,0 +1,15 @@
+.card {
+  width: fit-content;
+  min-width: 240px;
+  max-width: 300px;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 50px 30px;
+  background-color: var(--color-primary-very-light);
+  box-shadow: var(--shadow-v) var(--shadow-h) var(--shadow-blur) var(--shadow-spread) var(--color-shadow);
+  margin: 10px;
+
+  &__item {
+    margin-bottom: 8px;
+  }
+}
